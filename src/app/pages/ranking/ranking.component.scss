@@ -1,0 +1,21 @@
+.items-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    margin: 0 auto;
+    max-width: 980px;
+    padding: 2rem 1rem;
+    .card {
+        background: linear-gradient(135deg,#333d57,#283149);
+        border-radius: 0.25rem;
+        box-shadow: 0 6px 10px 0 rgba(19,26,43,.2);
+        color: white;
+        padding: 0.5rem;
+        app-position {
+            display: block;
+            & + app-position {
+                margin-top: 0.75rem;
+            }
+        }
+    }
+}

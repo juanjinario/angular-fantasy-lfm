@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { CookieService } from "ngx-cookie-service";
 
 import { TokenInterceptor } from "./core/interceptors/token.interceptor";
 import { AppRoutingModule } from "./app-routing.module";
@@ -11,7 +12,7 @@ import { DashboardComponent } from "./pages/dashboard/dashboard.component";
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, LayoutModule],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
