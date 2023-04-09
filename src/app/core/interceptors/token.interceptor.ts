@@ -6,6 +6,7 @@ import {
   HttpInterceptor,
 } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment.development";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
@@ -15,7 +16,7 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
-    const token = "aquí va el token bearer"; // reemplazar con tu token
+    const token = environment.token;
 
     // Si el token existe, agregamos un encabezado de autorización
     if (token) {

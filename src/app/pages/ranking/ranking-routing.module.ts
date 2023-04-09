@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { RankingComponent } from './ranking.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { RankingComponent } from "./ranking.component";
 
-const routes: Routes = [{ path: '', component: RankingComponent }];
+const routes: Routes = [
+  { path: "", component: RankingComponent },
+  { path: ":week", component: RankingComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RankingRoutingModule { }
+export class RankingRoutingModule {}

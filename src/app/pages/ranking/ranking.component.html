@@ -1,5 +1,5 @@
 <section class="items-grid">
-  <article class="card" *ngFor="let team of teams">
+  <article class="card" *ngFor="let team of teamList">
     <app-position [players]="team.formation.goalkeeper"></app-position>
     <app-position [players]="team.formation.defender"></app-position>
     <app-position [players]="team.formation.midfield"></app-position>

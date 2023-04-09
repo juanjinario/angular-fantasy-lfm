@@ -5,15 +5,19 @@
     margin: 0 auto;
     max-width: 980px;
     padding: 2rem 1rem;
+
+    // https://docs.google.com/spreadsheets/d/1-yIv0fzXRdE7ytcubtNrup8h0am5SaRtXpX7VK0H5k0/gviz/tq?tqx=out:json&gid=177938431
     .card {
-        background: linear-gradient(135deg,#333d57,#283149);
+        background: linear-gradient(135deg, #333d57, #283149);
         border-radius: 0.25rem;
-        box-shadow: 0 6px 10px 0 rgba(19,26,43,.2);
+        box-shadow: 0 6px 10px 0 rgba(19, 26, 43, .2);
         color: white;
         padding: 0.5rem;
+
         app-position {
             display: block;
-            & + app-position {
+
+            &+app-position {
                 margin-top: 0.75rem;
             }
         }

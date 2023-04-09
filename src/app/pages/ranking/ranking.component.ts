@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
 import { RankingService } from "../../core/services/ranking.service";
+import { UserService } from "../../core/services/user.service";
+import { forkJoin } from "rxjs";
 
 @Component({
   selector: "app-ranking",
@@ -7,18 +9,26 @@ import { RankingService } from "../../core/services/ranking.service";
   styleUrls: ["./ranking.component.scss"],
 })
 export class RankingComponent {
-  ranking: any[] = [];
-  teams: any[] = [];
+  teamList: any[] = [];
+  myTeam: any = {};
 
-  constructor(private rankingService: RankingService) {}
+  constructor(
+    private rankingService: RankingService,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
-    // this.rankingService.getRanking().subscribe((data: any) => {
-    //   console.log(data);
-    // });
-    this.rankingService.getTopTenTeams().subscribe((teams: any) => {
-      this.teams = teams;
+    this.fetchData();
+  }
+
+  fetchData() {
+    forkJoin({
+      teams: this.rankingService.getLineUps({}),
+      myTeam: this.userService.getUserLineUp({}),
+    }).subscribe(({ teams, myTeam }) => {
+      this.teamList = teams;
       console.log(teams);
+      console.log(myTeam);
     });
   }
 }

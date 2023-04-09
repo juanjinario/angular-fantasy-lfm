@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { forkJoin, map, mergeMap, Observable } from "rxjs";
+import { environment } from "src/environments/environment.development";
 
 @Injectable({
   providedIn: "root",
 })
 export class RankingService {
-  private baseUrl = "/api/v3";
-  private week = 28;
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -19,18 +19,18 @@ export class RankingService {
     return this.http.get(url, { headers });
   }
 
-  getTopTenTeams() {
+  getLineUps({ total = 10, week = 28 }): Observable<any[]> {
     const headers = new HttpHeaders()
       .set("x-app", "Fantasy-web")
       .set("x-lang", "es");
     return this.getRanking().pipe(
-      mergeMap((results) => {
-        const topTenResults = results.slice(0, 20);
-        const observables = topTenResults.map((result: any) => {
-          const url = `${this.baseUrl}/teams/${result.team.id}/lineup/week/${this.week}`;
+      map((results: any) => results.slice(0, total)),
+      mergeMap((slicedResults: any[]) => {
+        const observables = slicedResults.map(({ team }) => {
+          const url = `${this.baseUrl}/teams/${team.id}/lineup/week/${week}`;
           return this.http.get(url, { headers });
         });
-        return forkJoin(observables);
+        return forkJoin<any[]>(observables);
       })
     );
   }
