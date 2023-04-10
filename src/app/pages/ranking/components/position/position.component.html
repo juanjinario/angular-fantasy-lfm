@@ -2,7 +2,9 @@
   <div class="section" *ngFor="let player of players">
     <div></div>
     <div>
-      <span>{{ player?.playerMaster?.nickname }}</span>
+      <span [ngClass]="{ 'text-color-green': player?.isRepeated }">{{
+        player?.playerMaster?.nickname
+      }}</span>
       <img [src]="player?.playerMaster?.team?.badgeColor" width="15" />
     </div>
   </div>

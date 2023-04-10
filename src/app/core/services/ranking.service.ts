@@ -2,6 +2,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { forkJoin, map, mergeMap, Observable } from "rxjs";
 import { environment } from "src/environments/environment.development";
+import { ILineup } from "../interfaces/ILineup";
+import { LineUpService } from "./line-up.service";
 
 @Injectable({
   providedIn: "root",
@@ -9,7 +11,7 @@ import { environment } from "src/environments/environment.development";
 export class RankingService {
   private baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private lineUpService: LineUpService) {}
 
   getRanking(): Observable<any> {
     const url = `${this.baseUrl}/ranking/global?x-lang=es`;
@@ -19,18 +21,14 @@ export class RankingService {
     return this.http.get(url, { headers });
   }
 
-  getLineUps({ total = 10, week = 28 }): Observable<any[]> {
-    const headers = new HttpHeaders()
-      .set("x-app", "Fantasy-web")
-      .set("x-lang", "es");
+  getLineUps({ total = 10, week = 28 }): Observable<ILineup[]> {
     return this.getRanking().pipe(
       map((results: any) => results.slice(0, total)),
       mergeMap((slicedResults: any[]) => {
         const observables = slicedResults.map(({ team }) => {
-          const url = `${this.baseUrl}/teams/${team.id}/lineup/week/${week}`;
-          return this.http.get(url, { headers });
+          return this.lineUpService.getWeekLineUp({ team, week });
         });
-        return forkJoin<any[]>(observables);
+        return forkJoin<ILineup[]>(observables);
       })
     );
   }
