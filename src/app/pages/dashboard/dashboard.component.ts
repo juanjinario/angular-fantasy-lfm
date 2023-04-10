@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { CookieService } from "ngx-cookie-service";
+import { environment } from "src/environments/environment.development";
 
 @Component({
   selector: "app-dashboard",
@@ -10,6 +11,6 @@ export class DashboardComponent {
   token = "";
 
   constructor(private cookieService: CookieService) {
-    this.token = this.cookieService.get("");
+    this.token = environment.token;
   }
 }
