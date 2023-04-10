@@ -26,7 +26,7 @@ export class RankingService {
       map((results: any) => results.slice(0, total)),
       mergeMap((slicedResults: any[]) => {
         const observables = slicedResults.map(({ team }) => {
-          return this.lineUpService.getWeekLineUp({ team, week });
+          return this.lineUpService.getWeekLineUp({ teamId: team.id, week });
         });
         return forkJoin<ILineup[]>(observables);
       })

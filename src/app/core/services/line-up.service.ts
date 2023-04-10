@@ -12,17 +12,11 @@ export class LineUpService {
 
   constructor(private http: HttpClient) {}
 
-  getWeekLineUp({
-    team,
-    week = 28,
-  }: {
-    team: any;
-    week: number;
-  }): Observable<ILineup> {
+  getWeekLineUp({ teamId = "8997839", week = 28 }): Observable<ILineup> {
     const headers = new HttpHeaders()
       .set("x-app", "Fantasy-web")
       .set("x-lang", "es");
-    const url = `${this.baseUrl}/teams/${team.id}/lineup/week/${week}`;
+    const url = `${this.baseUrl}/teams/${teamId}/lineup/week/${week}`;
     return this.http.get<ILineup>(url, { headers });
   }
 }

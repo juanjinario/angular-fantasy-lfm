@@ -5,6 +5,7 @@ import { forkJoin } from "rxjs";
 import { ILineup } from "src/app/core/interfaces/ILineup";
 import { IPlayer } from "src/app/core/interfaces/IPlayer";
 import { IFormation } from "src/app/core/interfaces/IFormation";
+import { LineUpService } from "src/app/core/services/line-up.service";
 
 @Component({
   selector: "app-ranking",
@@ -17,7 +18,8 @@ export class RankingComponent {
 
   constructor(
     private rankingService: RankingService,
-    private userService: UserService
+    private userService: UserService,
+    private lineUpService: LineUpService
   ) {}
 
   ngOnInit() {
@@ -27,7 +29,7 @@ export class RankingComponent {
   fetchData() {
     forkJoin({
       teams: this.rankingService.getLineUps({}),
-      myTeam: this.userService.getUserLineUp({}),
+      myTeam: this.lineUpService.getWeekLineUp({}),
     }).subscribe(({ teams, myTeam }) => {
       this.teamList = this.getRepeatedPlayersInRivals({ myTeam, teams });
       console.log(teams);
