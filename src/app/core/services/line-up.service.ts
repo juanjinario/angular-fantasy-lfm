@@ -12,7 +12,7 @@ export class LineUpService {
 
   constructor(private http: HttpClient) {}
 
-  getWeekLineUp({ teamId = "8997839", week = 28 }): Observable<ILineup> {
+  getWeekLineUp({ teamId = "8997839", week = 29 }): Observable<ILineup> {
     const headers = new HttpHeaders()
       .set("x-app", "Fantasy-web")
       .set("x-lang", "es");

@@ -21,7 +21,7 @@ export class RankingService {
     return this.http.get(url, { headers });
   }
 
-  getLineUps({ total = 10, week = 28 }): Observable<ILineup[]> {
+  getLineUps({ total = 20, week = 29 }): Observable<ILineup[]> {
     return this.getRanking().pipe(
       map((results: any) => results.slice(0, total)),
       mergeMap((slicedResults: any[]) => {
