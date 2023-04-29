@@ -1,8 +1,10 @@
 import { IFormation } from "./IFormation";
+import { IManager } from "./IManager";
 
 export interface ILineup {
-  formation: IFormation;
-  points: number;
   initialPoints: number;
+  formation: IFormation;
+  manager?: IManager;
+  points: number;
   teamSnapshotTookOn: string;
 }

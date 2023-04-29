@@ -32,8 +32,7 @@ export class RankingComponent {
       myTeam: this.lineUpService.getWeekLineUp({}),
     }).subscribe(({ teams, myTeam }) => {
       this.teamList = this.getRepeatedPlayersInRivals({ myTeam, teams });
-      console.log(teams);
-      console.log(myTeam);
+      console.log(this.teamList);
     });
   }
 
