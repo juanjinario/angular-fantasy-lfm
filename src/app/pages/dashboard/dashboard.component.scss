@@ -1,25 +1,21 @@
 .pipe-wrapper {
     margin: 0 auto;
     width: 400px;
-}
-
-.pipe1 {
+  }
+  
+  .pipe1 {
     position: relative;
     width: 10px;
     height: 300px;
     background-image: linear-gradient(to top, #ddd 0%, #ddd 50%, #000 50%, #000 100%);
-    background-size: 10px 600px;
-    animation: fillPipe1 2s ease-in-out forwards;
+    background-position: 0 -300px;
   }
-
+  
   .pipe2 {
     position: relative;
     width: 400px;
     height: 10px;
     background-image: linear-gradient(to right, #ddd 0%, #ddd 50%, #000 50%, #000 100%);
-    animation: fillPipe2 2s ease-in-out forwards;
-    background-size: 800px 10px;
-    animation-delay: 1.75s; /* se añade el delay aquí */
   }
   
   .pipe1:before {
@@ -41,7 +37,7 @@
       background-position: 0 0;
     }
   }
-
+  
   @keyframes fillPipe2 {
     0% {
       background-position: 0 0;
@@ -50,3 +46,22 @@
       background-position: 400px 0;
     }
   }
+  
+  .pipe1 {
+    background-size: 10px 600px;
+  }
+  
+  .pipe2 {
+    background-size: 800px 10px;
+  }
+  
+  .fill .pipe1 {
+    animation: fillPipe1 2s ease-in-out forwards;
+  }
+  
+  .fill .pipe2 {
+    animation: fillPipe2 2s ease-in-out forwards;
+    animation-delay: 2s;
+  }
+  
+  
