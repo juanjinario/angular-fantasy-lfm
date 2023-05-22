@@ -4,6 +4,7 @@ import { UserService } from "../../core/services/user.service";
 import { forkJoin } from "rxjs";
 import { ILineup } from "src/app/core/interfaces/ILineup";
 import { IPlayer } from "src/app/core/interfaces/IPlayer";
+import { IPlayerFrequency } from "src/app/core/interfaces/IPlayerFrequency";
 import { IFormation } from "src/app/core/interfaces/IFormation";
 import { LineUpService } from "src/app/core/services/line-up.service";
 
@@ -15,6 +16,7 @@ import { LineUpService } from "src/app/core/services/line-up.service";
 export class RankingComponent {
   teamList: ILineup[] = [];
   myTeam!: ILineup;
+  repeatedPlayers: { [position: string]: IPlayerFrequency[] } = {};
 
   constructor(
     private rankingService: RankingService,
@@ -32,7 +34,8 @@ export class RankingComponent {
       myTeam: this.lineUpService.getWeekLineUp({}),
     }).subscribe(({ teams, myTeam }) => {
       this.teamList = this.getRepeatedPlayersInRivals({ myTeam, teams });
-      console.log(this.teamList);
+      this.repeatedPlayers = this.getTopPlayersByPosition(teams);
+      console.log(this.repeatedPlayers);
     });
   }
 
@@ -78,5 +81,41 @@ export class RankingComponent {
         return false;
       }
     );
+  }
+
+  getTopPlayersByPosition(teams: ILineup[]): {
+    [position: string]: IPlayerFrequency[];
+  } {
+    const playerFrequencies: { [position: string]: IPlayerFrequency[] } = {};
+
+    teams.forEach((team) => {
+      Object.keys(team.formation).forEach((position) => {
+        team.formation[position as keyof IFormation].forEach(
+          (player: IPlayer | number) => {
+            if (player instanceof Object) {
+              const existingPlayer = playerFrequencies[position]?.find(
+                (p) => p.player.playerMaster.id === player.playerMaster.id
+              );
+
+              if (existingPlayer) {
+                existingPlayer.frequency++;
+              } else {
+                if (!playerFrequencies[position]) {
+                  playerFrequencies[position] = [];
+                }
+
+                playerFrequencies[position].push({
+                  player,
+                  frequency: 1,
+                });
+              }
+            }
+          }
+        );
+
+        playerFrequencies[position]?.sort((a, b) => b.frequency - a.frequency);
+      });
+    });
+    return playerFrequencies;
   }
 }

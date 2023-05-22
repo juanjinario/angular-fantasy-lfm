@@ -12,3 +12,15 @@
     <app-position [players]="team.formation.striker"></app-position>
   </article>
 </section>
+
+<!-- Jugadores mas usados por posición -->
+<div *ngFor="let position of repeatedPlayers | keyvalue">
+  <div *ngIf="position.value && position.value?.length">
+    <h3>{{ position.key }}</h3>
+    <ul>
+      <li *ngFor="let player of position.value">
+        {{ player.player.playerMaster.name }} ({{ player.frequency }})
+      </li>
+    </ul>
+  </div>
+</div>
