@@ -14,6 +14,7 @@ const routes: Routes = [
     loadChildren: () =>
       import("./pages/market/market.module").then((m) => m.MarketModule),
   },
+  { path: 'happyBirthday', loadChildren: () => import('./pages/happy-birthday/happy-birthday.module').then(m => m.HappyBirthdayModule) },
 ];
 
 @NgModule({
